@@ -43,9 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameState.cs" />
     <Compile Include="Engine\Tick.cs" />
     <Compile Include="Game\ModuleQuery.cs" />
+    <Compile Include="Game\Modules\HabitationModule.cs" />
     <Compile Include="Game\Modules\RepairModule.cs" />
     <Compile Include="Game\Visitors\Crew.cs" />
     <Compile Include="Game\Economy.cs" />
@@ -55,6 +55,7 @@
     <Compile Include="Game\Modules\DockModule.cs" />
     <Compile Include="Game\Visitors\Ship.cs" />
     <Compile Include="Game\Station.cs" />
+    <Compile Include="Ideas.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\View.cs" />

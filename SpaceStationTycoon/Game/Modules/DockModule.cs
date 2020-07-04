@@ -9,18 +9,17 @@ namespace SpaceStationTycoon.Game.Modules
 {
     public class DockModule : IModule {
         public static int GetIdentifier(int sizeClass, int tier) => "DockModule".GetHashCode() ^ sizeClass ^ tier;
-        public Type ModuleType { get => typeof(DockModule); }
 
-        public int Tier { get; }
+        public int Tier { get; } = 1;
         public double BasePrice { get => Tier * 100; }
         public int Identifier { get => GetIdentifier(SizeClass, Tier); }
         public bool IsExternal { get => true; }
         public int Units { get => Tier * Tier; }
 
         public bool IsOccupied { get => OccupyingShip != null; }
-        public Ship OccupyingShip { get; set; }
+        public Ship OccupyingShip { get; set; } = null;
 
-        public int SizeClass { get; }
+        public int SizeClass { get; } = 1;
 
 
         public DockModule(int tier, int sizeClass) {
@@ -29,36 +28,21 @@ namespace SpaceStationTycoon.Game.Modules
             Tier = tier;
             SizeClass = sizeClass;
         }
+
+        public void Update(double deltaTimeSeconds) {
+            //
+        }
     }
 
-    public struct DockModuleQuery : IModuleQuery<DockModule> {
+    public class DockModuleQuery : ModuleQuery<DockModule> {
         public bool IsOccupied { get; set; }
         public int MinimumTier { get; set; }
         public int SizeClass { get; set; }
 
-        public bool Check(DockModule module) {
+        public override bool Check(DockModule module) {
             return module.IsOccupied == IsOccupied
                 && module.SizeClass == SizeClass
                 && module.Tier >= MinimumTier;
-        }
-
-        public List<DockModule> FindAllMatches(Station station) {
-            List<DockModule> modules = new List<DockModule>();
-            foreach (IModule module in station.Modules) {
-                if (module.ModuleType == typeof(DockModule)) {
-                    modules.Add(module as DockModule);
-                }
-            }
-            return modules;
-        }
-
-        public DockModule FindFirstMatch(Station station) {
-            foreach (IModule module in station.Modules) {
-                if (module.ModuleType == typeof(DockModule)) {
-                    return module as DockModule;
-                }
-            }
-            return null;
         }
     }
 

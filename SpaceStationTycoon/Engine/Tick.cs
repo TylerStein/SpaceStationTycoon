@@ -34,5 +34,13 @@ namespace SpaceStationTycoon
         public void OnTimerDisposed(Object sender, EventArgs e) {
             _disposedCallback.Invoke();
         }
+
+        public void PauseTimer() {
+            _timer.Stop();
+        }
+
+        public void StartTimer() {
+            _timer.Start();
+        }
     }
 }

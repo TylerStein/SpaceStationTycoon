@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpaceStationTycoon
 {
+    using Game;
+
     public class View
     {
         private string[] _currentLines;
@@ -41,21 +43,30 @@ namespace SpaceStationTycoon
             _currentLines[row] = paddedContent;
         }
 
-        public void RenderGameState(GameState state) {
+        public void RenderGameState(GameInstance state) {
             ClearLines();
 
             SetLineContent(0, "");
             SetLineContent(1, $"> Press (Enter) to Quit");
             SetLineContent(2, "");
 
-            SetLineContent(3, $"> Credits:  {state.credits} (+{state.TotalIncomePerSecond})");
-            SetLineContent(4, $"> Docks:    {state.docks}");
-
-            if (state.credits >= state.dockPrice) {
-                SetLineContent(5, $"> Press (1) to build a Dock for {state.dockPrice} Credits");
+            int ln = 3;
+            LinkedListNode<string> ev = state.Station.EventLog.First;
+            while (ev.Next != null) {
+                SetLineContent(ln, ev.Value);
+                ln++;
+                ev = ev.Next;
             }
 
             DrawLines();
+
+            //SetLineContent(3, $"> Credits:  {state.credits} (+{state.TotalIncomePerSecond})");
+            //SetLineContent(4, $"> Docks:    {state.docks}");
+
+            //if (state.credits >= state.dockPrice) {
+            //    SetLineContent(5, $"> Press (1) to build a Dock for {state.dockPrice} Credits");
+            //}
+
         }
     }
 }

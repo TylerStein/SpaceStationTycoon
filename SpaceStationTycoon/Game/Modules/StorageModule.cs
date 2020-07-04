@@ -11,7 +11,7 @@ namespace SpaceStationTycoon.Game.Modules
         private int _storageTypeIdentifier = 0;
 
         public int Units { get => Tier; }
-        public int Tier { get; }
+        public int Tier { get; } = 1;
         public bool IsExternal { get => false; }
         public double BasePrice { get => Tier * 50; }
         public int Identifier { get => "StorageModule".GetHashCode() ^ _storageTypeIdentifier; }
@@ -21,6 +21,10 @@ namespace SpaceStationTycoon.Game.Modules
             if (tier < 1) throw new Exception("StorageModule tier must be >= 1");
             Tier = tier;
             _storageTypeIdentifier = storageType.GetHashCode();
+        }
+
+        public void Update(double deltaTimeSeconds) {
+            //
         }
     }
 }
