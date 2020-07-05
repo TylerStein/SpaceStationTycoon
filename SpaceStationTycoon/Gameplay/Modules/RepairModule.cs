@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SpaceStationTycoon.Game.Visitors;
-namespace SpaceStationTycoon.Game.Modules
+using SpaceStationTycoon.Gameplay.Visitors;
+namespace SpaceStationTycoon.Gameplay.Modules
 {
     public class RepairModule : IModule
     {
@@ -23,7 +23,9 @@ namespace SpaceStationTycoon.Game.Modules
         public double RemainingRepairTime { get => RepairTimeTarget - RepairTimer; }
         public double RepairTimer { get; private set; } = 0.0;
         public double RepairTimeTarget { get; private set; } = 0.0;
-        
+
+        public string DisplayStatus { get => $"RepairModule (T{Tier}, Occupied = {IsOccupied}, RemainingRepairTime = {(IsOccupied ? RemainingRepairTime.ToString("N1") : "N/A")})"; }
+
         public RepairModule(int tier) {
             if (tier < 1) throw new Exception("RepairModule Tier must be >= 1");
             Tier = tier;

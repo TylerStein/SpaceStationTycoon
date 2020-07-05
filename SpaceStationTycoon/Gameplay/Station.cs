@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace SpaceStationTycoon.Game
+namespace SpaceStationTycoon.Gameplay
 {
     public class Station
     {
@@ -24,27 +24,27 @@ namespace SpaceStationTycoon.Game
             foreach (IModule module in startingModules) {
                 if (module.IsExternal) TotalExternalUnits += module.Units;
                 else TotalInternalUnits += module.Units;
-                TryAddModule(module);
+                TryAddModule(module, false);
             }
         }
 
-        public bool TryAddModule(IModule module) {
+        public bool TryAddModule(IModule module, bool logEvent) {
             if (module.IsExternal) {
                 if (FreeExternalUnits >= module.Units) {
                     _modules.Add(module);
                     OccupiedExternalUnits += module.Units;
-                    LogEvent("Built a module: " + module.GetType().Name);
+                    if (logEvent) LogEvent("Built a module: " + module.GetType().Name);
                     return true;
                 }
             } else {
                 if (FreeInternalUnits >= module.Units) {
                     _modules.Add(module);
                     OccupiedInternalUnits += module.Units;
-                    LogEvent("Built a module: " + module.GetType().Name);
+                    if (logEvent) LogEvent("Built a module: " + module.GetType().Name);
                     return true;
                 }
             }
-            LogEvent("Failed to build a module: " + module.GetType().Name);
+            if (logEvent) LogEvent("Failed to build a module: " + module.GetType().Name);
             return false;
         }
 

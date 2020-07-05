@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpaceStationTycoon.Game.Modules
+namespace SpaceStationTycoon.Gameplay.Modules
 {
     using Visitors;
 
@@ -30,6 +30,9 @@ namespace SpaceStationTycoon.Game.Modules
         public int FreeSlots { get => TotalSlots - OccupiedSlots; }
 
         public List<HabitationCrewStatus> OccupyingCrew { get; private set; } = new List<HabitationCrewStatus>();
+
+
+        public string DisplayStatus { get => $"HabitationModule (T{Tier}, OccupiedSlots = {OccupiedSlots}, FreeSlots = {FreeSlots})"; }
 
         public HabitationModule(int tier) {
             Tier = tier;

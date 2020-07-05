@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SpaceStationTycoon.Game.Visitors;
-namespace SpaceStationTycoon.Game.Modules
+using SpaceStationTycoon.Gameplay.Visitors;
+namespace SpaceStationTycoon.Gameplay.Modules
 {
     public class DockModule : IModule {
         public static int GetIdentifier(int sizeClass, int tier) => "DockModule".GetHashCode() ^ sizeClass ^ tier;
@@ -21,6 +21,7 @@ namespace SpaceStationTycoon.Game.Modules
 
         public int SizeClass { get; } = 1;
 
+        public string DisplayStatus { get => $"DockModule (T{Tier}, S{SizeClass}, Occupied = {IsOccupied})"; }
 
         public DockModule(int tier, int sizeClass) {
             if (tier < 1) throw new Exception("DockModule Tier must be >= 1");

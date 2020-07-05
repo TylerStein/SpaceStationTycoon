@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpaceStationTycoon.Game.Modules
+namespace SpaceStationTycoon.Gameplay.Modules
 {
     class StorageModule : IModule
     {
@@ -16,6 +16,9 @@ namespace SpaceStationTycoon.Game.Modules
         public double BasePrice { get => Tier * 50; }
         public int Identifier { get => "StorageModule".GetHashCode() ^ _storageTypeIdentifier; }
         public int Space { get => Tier * Tier * 1000; }
+
+
+        public string DisplayStatus { get => $"StorageModule(T{Tier}, Space = ${Space})"; }
 
         public StorageModule(string storageType, int tier) {
             if (tier < 1) throw new Exception("StorageModule tier must be >= 1");

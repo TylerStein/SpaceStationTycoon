@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SpaceStationTycoon
+namespace SpaceStationTycoon.Engine
 {
-    using Game;
+    public interface IRenderable
+    {
+        string[] Render();
+    }
 
-    public class View
+    public class Renderer
     {
         private string[] _currentLines;
         
-        public View() {
-            Console.Title = "Space Station Tycoon";
+        public Renderer() {
             ClearLines();
         }
 
@@ -43,30 +41,15 @@ namespace SpaceStationTycoon
             _currentLines[row] = paddedContent;
         }
 
-        public void RenderGameState(GameInstance state) {
+        public void RenderView(IRenderable view) {
             ClearLines();
 
-            SetLineContent(0, "");
-            SetLineContent(1, $"> Press (Enter) to Quit");
-            SetLineContent(2, "");
-
-            int ln = 3;
-            LinkedListNode<string> ev = state.Station.EventLog.First;
-            while (ev.Next != null) {
-                SetLineContent(ln, ev.Value);
-                ln++;
-                ev = ev.Next;
+            string[] lines = view.Render();
+            for (int i = 0; i < lines.Length; i++) {
+                SetLineContent(i, lines[i]);
             }
 
             DrawLines();
-
-            //SetLineContent(3, $"> Credits:  {state.credits} (+{state.TotalIncomePerSecond})");
-            //SetLineContent(4, $"> Docks:    {state.docks}");
-
-            //if (state.credits >= state.dockPrice) {
-            //    SetLineContent(5, $"> Press (1) to build a Dock for {state.dockPrice} Credits");
-            //}
-
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpaceStationTycoon.Game.Visitors
+namespace SpaceStationTycoon.Gameplay.Visitors
 {
     public class Crew
     {

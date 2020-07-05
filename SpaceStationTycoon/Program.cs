@@ -3,49 +3,45 @@ using System.Threading;
 
 namespace SpaceStationTycoon
 {
-    using Game;
-    using Game.Modules;
+    using Scenes;
+    using Gameplay;
+    using Engine;
 
     class Program
     {
-        public static readonly double gameTickSeconds = 0.25;
+        public static readonly int gameTickMs = 100;
+        
+        public static ConsoleKey quitKey = ConsoleKey.Enter;
 
-        public static View view;
-        // public static Tick loop;
-        public static GameInstance game; 
+        public static Renderer renderer;
+        public static Input input;
+        public static Game game;
 
         static void Main(string[] args) {
-            // loop = new Tick(gameTickSeconds, OnTick, OnDispose);
-            view = new View();
+            Console.Title = "Space Station Tycoon";
 
-            Economy economy = new Economy();
-            Station station = new Station(0, 0, new IModule[] { new DockModule(1, 1), new RepairModule(1), new HabitationModule(1) });
-            game = new GameInstance(station, economy);
+            renderer = new Renderer();
+            input = new Input(quitKey, true);
+            game = new Game();
 
-            int gameTickMs = (int)Math.Round(gameTickSeconds * 1000);
-            Thread gameThread = new Thread(() => {
-                Thread.CurrentThread.IsBackground = false;
-                while (true) {
-                    Thread.Sleep(gameTickMs);
-                    OnTick(gameTickSeconds);
-                }
-            });
-            gameThread.Start();
 
             while (true) {
-                var key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.Enter) {
-                    break;
+                InputState inputState = input.ConsumeLast();
+                if (inputState.HasKey) {
+                    if (inputState.Key == quitKey) {
+                        break;
+                    }
                 }
+
+                //rootComponent.Controller.Update(gameTickMs / 1000.0, inputState);
+                //renderer.RenderView(rootComponent.View);
+
+                game.Update(gameTickMs / 1000.0, inputState);
+                renderer.RenderView(game);
+                Thread.Sleep(gameTickMs);
             }
 
-            gameThread.Abort();
-            gameThread = null;
-        }
-
-        static void OnTick(double deltaTimeMs) {
-            game.Update(gameTickSeconds);
-            view.RenderGameState(game);
-        }
+            Console.Clear();
+        }     
     }
 }

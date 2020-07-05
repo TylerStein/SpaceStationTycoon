@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SpaceStationTycoon.Game.Modules;
-namespace SpaceStationTycoon.Game.Visitors
+using SpaceStationTycoon.Gameplay.Modules;
+namespace SpaceStationTycoon.Gameplay.Visitors
 {
     public class Ship
     {

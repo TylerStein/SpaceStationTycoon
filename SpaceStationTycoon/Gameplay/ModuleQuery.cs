@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpaceStationTycoon.Game
+namespace SpaceStationTycoon.Gameplay
 {
     public interface IModuleQuery<T> where T : class, IModule
     {
@@ -24,7 +24,10 @@ namespace SpaceStationTycoon.Game
                 Type moduleType = module.GetType();
 
                 if (queryType == moduleType) {
-                    modules.Add(module as T);
+                    T typedModule = module as T;
+                    if (Check(typedModule)) {
+                        modules.Add(typedModule);
+                    }
                 }
             }
             return modules;
@@ -36,7 +39,10 @@ namespace SpaceStationTycoon.Game
                 Type moduleType = module.GetType();
 
                 if (queryType == moduleType) {
-                    return module as T;
+                    T typedModule = module as T;
+                    if (Check(typedModule)) {
+                        return typedModule;
+                    }
                 }
             }
             return null;
